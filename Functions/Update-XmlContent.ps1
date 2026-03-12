@@ -1,4 +1,4 @@
-function Xml-FindAndReplaceInXml {
+function Update-XmlContent {
     Param(
         [Parameter(Mandatory = $True)][string]$SourceXmlFileName, 
         [Parameter(Mandatory = $True)][string]$StringToReplace, 

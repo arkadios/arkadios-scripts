@@ -1,4 +1,4 @@
-function Xml-RemoveNodeFromXml {
+function Remove-XmlNode {
     Param (
         [Parameter(Mandatory = $True)][string]$SourceXmlFileName, 
         [Parameter(Mandatory = $True)][string]$XPath, 

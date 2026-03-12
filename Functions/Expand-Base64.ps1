@@ -1,4 +1,4 @@
-function Base64-DecodeAndDecompress {
+function Expand-Base64 {
     param (
         [Parameter(Mandatory = $true)]
         [string]$base64String

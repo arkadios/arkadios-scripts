@@ -1,4 +1,4 @@
-function Xml-MoveNodesToOtherXml {
+function Move-XmlNodes {
     
     Param(
         [Parameter(Mandatory = $True)][string]$SourceXmlFileName, 

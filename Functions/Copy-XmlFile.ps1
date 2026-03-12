@@ -1,4 +1,4 @@
-function Xml-CopyXmlToOtherXml {
+function Copy-XmlFile {
     Param(
         [Parameter(Mandatory = $True)][string]$SourceXmlFileName, 
         [Parameter(Mandatory = $True)][string]$DestinationXmlFileName, 
