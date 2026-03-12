@@ -17,7 +17,7 @@ $moduleRoot = $PSScriptRoot
 
 
 # loading functions
-"$moduleRoot\..\..\functions\*.ps1", "$moduleRoot\..\..\wrappers\*.ps1" | Get-Childitem | ForEach-Object { 
+"$moduleRoot\..\..\Functions\*.ps1", "$moduleRoot\..\..\Wrappers\*.ps1" | Get-Childitem | ForEach-Object { 
     .$_.Fullname ;
     Export-ModuleMember -Function $($_.Basename);
     write-host -ForegroundColor DarkYellow " - Function loaded: '$($_.Basename)'"
