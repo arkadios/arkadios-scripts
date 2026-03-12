@@ -1,0 +1,19 @@
+function Add-ComputerAsTrustedLocation(){
+	param(
+		[string]$ComputerName
+	)
+	if($ComputerName -notcontains ":"){
+
+		write-log "  Adding '$ComputerName' to Domains zonemap of Internet Settings to trust that location..."
+		$ieSettingRegPath = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Internet Settings\ZoneMap\Domains\$ComputerName";
+
+		if (-not (Test-Path -Path $ieSettingRegPath -ErrorAction SilentlyContinue))
+		{    
+			New-Item -Path $ieSettingRegPath -ErrorAction SilentlyContinue
+		}
+
+		Set-ItemProperty -Path $ieSettingRegPath -Name file -Value 1 -ErrorAction SilentlyContinue
+		Set-ItemProperty -Path $ieSettingRegPath -Name http -Value 1 -ErrorAction SilentlyContinue
+		Set-ItemProperty -Path $ieSettingRegPath -Name https -Value 1 -ErrorAction SilentlyContinue
+	}
+}
