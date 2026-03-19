@@ -17,6 +17,10 @@ function Add-ComputerAsTrustedLocation(){
 	param(
 		[string]$ComputerName
 	)
+	if ($PSVersionTable.PSEdition -ne 'Desktop' -and -not $IsWindows) {
+		Write-Error "Add-ComputerAsTrustedLocation is only supported on Windows (requires Windows Registry)."
+		return
+	}
 	if($ComputerName -notcontains ":"){
 
 		write-log "  Adding '$ComputerName' to Domains zonemap of Internet Settings to trust that location..."

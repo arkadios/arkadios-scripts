@@ -49,8 +49,13 @@ Function Get-LoggedInUser {
                 [string]   $UserName
             )
      
-        BEGIN {}
-     
+        BEGIN {
+            if ($PSVersionTable.PSEdition -ne 'Desktop' -and -not $IsWindows) {
+                Write-Error "Get-LoggedInUser is only supported on Windows (requires quser)."
+                return
+            }
+        }
+
         PROCESS {
             foreach ($Computer in $ComputerName) {
                 try {

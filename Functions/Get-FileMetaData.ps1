@@ -53,6 +53,10 @@ Function Get-FileMetaData {
  #Requires -Version 2.0
  #>
     Param([string[]]$folder)
+    if ($PSVersionTable.PSEdition -ne 'Desktop' -and -not $IsWindows) {
+        Write-Error "Get-FileMetaData is only supported on Windows (requires Shell.Application COM object)."
+        return
+    }
     foreach ($sFolder in $folder) {
         $a = 0
         $objShell = New-Object -ComObject Shell.Application

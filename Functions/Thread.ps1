@@ -20,7 +20,17 @@ function Thread{
 .EXAMPLE
     Thread -command "Get-Process | Out-File C:\temp\procs.txt"
 #>
-    param($command, $maxProcessingBatchSize = $((Get-CimInstance Win32_ComputerSystem).NumberOfLogicalProcessors - 1), [string]$Base64EncodedCommand )
+    param($command, $maxProcessingBatchSize, [string]$Base64EncodedCommand )
+
+    if ($PSVersionTable.PSEdition -ne 'Desktop' -and -not $IsWindows) {
+        Write-Error "Thread is only supported on Windows (requires Win32_ComputerSystem CIM)."
+        return
+    }
+
+    if (-not $maxProcessingBatchSize) {
+        $maxProcessingBatchSize = (Get-CimInstance Win32_ComputerSystem).NumberOfLogicalProcessors - 1
+    }
+
     $counter++;
             
     if (-not $Global:runningThreads -or ($Global:runningThreads).Count -eq 0) { 

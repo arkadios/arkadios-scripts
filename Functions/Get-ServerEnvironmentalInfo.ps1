@@ -16,7 +16,12 @@ function Get-ServerEnvironmentalInfo([string]$ServerName){
 .EXAMPLE
     Get-ServerEnvironmentalInfo -ServerName "SERVER01"
 #>
-	# get the sharepoint list item for current server 
+	if ($PSVersionTable.PSEdition -ne 'Desktop' -and -not $IsWindows) {
+		Write-Error "Get-ServerEnvironmentalInfo is only supported on Windows (requires SharePoint)."
+		return
+	}
+
+	# get the sharepoint list item for current server
 	$serverInfo = New-Object -TypeName PSObject
 	$serverInfo | Add-Member -MemberType NoteProperty -Name ServerName -Value $ServerName
 	$serverInfo | Add-Member -MemberType NoteProperty -Name Version -Value ""

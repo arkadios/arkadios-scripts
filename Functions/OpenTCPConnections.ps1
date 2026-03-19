@@ -12,6 +12,11 @@ function OpenTCPConnections(){
     OpenTCPConnections
 #>
 
+    if ($PSVersionTable.PSEdition -ne 'Desktop' -and -not $IsWindows) {
+        Write-Error "OpenTCPConnections is only supported on Windows (requires Get-NetTCPConnection)."
+        return
+    }
+
     Get-NetTCPConnection -State Established |Select-Object -Property LocalAddress, LocalPort,@{name='RemoteHostName';expression={(Resolve-DnsName $_.RemoteAddress).NameHost}},RemoteAddress, RemotePort, State,@{name='ProcessName';expression={(Get-Process -Id $_.OwningProcess). Path}},OffloadState,CreationTime |ft
 
 }

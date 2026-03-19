@@ -18,6 +18,10 @@ function Get-InstalledOfficeSoftware{
     Get-InstalledOfficeSoftware -PsPathFilter "*\Visio*"
 #>
     param([string]$PsPathFilter="*\Office*")
+    if ($PSVersionTable.PSEdition -ne 'Desktop' -and -not $IsWindows) {
+        Write-Error "Get-InstalledOfficeSoftware is only supported on Windows (requires Windows Registry)."
+        return
+    }
 	$resultAsStringArray = ""
 	$RegLoc = Get-ChildItem HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall
 	$Programms  = $RegLoc | where { $_.PsPath -like "$PsPathFilter" } 

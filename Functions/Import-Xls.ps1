@@ -70,7 +70,12 @@ function Import-Xls {
         $Force 
     ) 
  
-    Begin { 
+    Begin {
+        if ($PSVersionTable.PSEdition -ne 'Desktop' -and -not $IsWindows) {
+            Write-Error "Import-Xls is only supported on Windows (requires Excel COM object)."
+            return
+        }
+
         function GetTempFileName($extension) { 
             $temp = [io.path]::GetTempFileName(); 
             $params = @{ 

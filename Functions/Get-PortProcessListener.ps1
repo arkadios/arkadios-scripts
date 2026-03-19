@@ -17,7 +17,12 @@ function Get-PortProcessListener {
         [Parameter(Mandatory = $true)]
         [int]$PortNumber
     )
-    
+
+    if ($PSVersionTable.PSEdition -ne 'Desktop' -and -not $IsWindows) {
+        Write-Error "Get-PortProcessListener is only supported on Windows (requires Get-NetTCPConnection/Get-NetUDPEndpoint)."
+        return
+    }
+
     # TCP
     write-host -f cyan " === TCP === "
     $owningProcTCP = (Get-NetTCPConnection -LocalPort $PortNumber -ErrorAction SilentlyContinue).OwningProcess

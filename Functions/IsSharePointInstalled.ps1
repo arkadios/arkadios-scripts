@@ -13,8 +13,13 @@ function IsSharePointInstalled([string]$version = "") {
 .EXAMPLE
     if (IsSharePointInstalled -version "2016") { Write-Host "SP 2016 found" }
 #>
-    [bool]$resultAsBool = $false; 
-	
+    if ($PSVersionTable.PSEdition -ne 'Desktop' -and -not $IsWindows) {
+        Write-Error "IsSharePointInstalled is only supported on Windows."
+        return $false
+    }
+
+    [bool]$resultAsBool = $false;
+
     Get-InstalledOfficeSoftware | % {
         if ($_ -like "*SharePoint Server $version*") {
             $resultAsBool = $true

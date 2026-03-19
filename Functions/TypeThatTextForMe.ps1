@@ -22,6 +22,10 @@ function TypeThatTextForMe {
     TypeThatTextForMe -textToType "Hello World" -WaitBeforeTypingInSeconds 3
 #>
     param([string] $textToType, [int]$WaitBeforeTypingInSeconds=5, [int]$delayInMillisecondsBetweenStrkes=1)
+    if ($PSVersionTable.PSEdition -ne 'Desktop' -and -not $IsWindows) {
+        Write-Error "TypeThatTextForMe is only supported on Windows (requires System.Windows.Forms)."
+        return
+    }
     sleep $WaitBeforeTypingInSeconds; 
     $textToType.ToCharArray() | ForEach-Object { [System.Windows.Forms.SendKeys]::SendWait($_); Start-Sleep -Milliseconds $delayInMillisecondsBetweenStrkes; }; 
     

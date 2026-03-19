@@ -12,11 +12,16 @@ function CheckCreateArkadiosPSLogsFolder() {
     determines the appropriate drive (D: or system drive, avoiding Azure temp storage)
     and creates a logs\powershell folder. Stores the path in a user environment variable
     and returns it.
+    This function is only supported on Windows.
 
 .EXAMPLE
     $logsFolder = CheckCreateArkadiosPSLogsFolder
 #>
-	
+	if ($PSVersionTable.PSEdition -ne 'Desktop' -and -not $IsWindows) {
+		Write-Error "CheckCreateArkadiosPSLogsFolder is only supported on Windows (requires WMI and Windows drive paths)."
+		return
+	}
+
 	if ([System.Environment]::GetEnvironmentVariable("ArkadiosPSLogsFolder", "USER") -eq $null) {
 		$drive = ""
 		# check if D drive exists first 

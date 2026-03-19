@@ -16,7 +16,11 @@ function IncrementalSync($Source, $Destination){
 .EXAMPLE
     IncrementalSync -Source "C:\Data" -Destination "D:\Backup"
 #>
-	write-log -f cyan "Starting incremental sync process"," for: '$Source'"," to '$Destination'" 
+	if ($PSVersionTable.PSEdition -ne 'Desktop' -and -not $IsWindows) {
+		Write-Error "IncrementalSync is only supported on Windows (requires xcopy)."
+		return
+	}
+	write-log -f cyan "Starting incremental sync process"," for: '$Source'"," to '$Destination'"
 	xcopy $Source $Destination /c /s /e /r /h /d /y /x
 	$Dt = Get-Date
 	write-log -f cyan "Incremental sync process has completed at $Dt" 

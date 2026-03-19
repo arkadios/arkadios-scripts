@@ -16,7 +16,12 @@ function Get-HWSpecs(
 .EXAMPLE
     Get-HWSpecs -servers @("Server01","Server02")
 #>
-    $results = @(); 
+    if ($PSVersionTable.PSEdition -ne 'Desktop' -and -not $IsWindows) {
+        Write-Error "Get-HWSpecs is only supported on Windows (requires WMI)."
+        return
+    }
+
+    $results = @();
 
     if ($null -eq $servers -or $servers.Count -le 0) {
         $serverInput = read-host "Provide an array of server to check (comman separated)"
