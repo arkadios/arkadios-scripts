@@ -1,6 +1,19 @@
 function Get-PortProcessListener {
+<#
+.SYNOPSIS
+    Identifies which process is listening on a specified port.
+
+.DESCRIPTION
+    Checks both TCP and UDP endpoints for the given port number and displays
+    the owning process details for each protocol.
+
+.PARAMETER PortNumber
+    The port number to look up.
+
+.EXAMPLE
+    Get-PortProcessListener -PortNumber 443
+#>
     param (
-        # Parameter help description
         [Parameter(Mandatory = $true)]
         [int]$PortNumber
     )

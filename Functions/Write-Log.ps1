@@ -37,6 +37,39 @@ function WriteToScreenAndFileSimple ([string[]]$WriteLogMessages, [bool]$IsError
 # $error as boolean = indicator wheater this message is an error
 # Errors are shown as red
 function Write-Log {
+<#
+.SYNOPSIS
+    Writes timestamped log messages to the console and a log file.
+
+.DESCRIPTION
+    An enhanced replacement for Write-Host that prepends a timestamp, supports
+    foreground/background colors, writes to a log file, and handles errors by
+    logging them to a separate error log. Supports verbose mode and pipeline input.
+
+.PARAMETER Messages
+    One or more string messages to log. Accepts pipeline input.
+
+.PARAMETER LogFileName
+    Optional log file name or path. Persisted globally for the session once set.
+
+.PARAMETER ForegroundColor
+    Console foreground color. Defaults to Cyan.
+
+.PARAMETER BackgroundColor
+    Console background color. Defaults to Black.
+
+.PARAMETER IsError
+    When $true, formats messages as errors with red background.
+
+.PARAMETER IsVerbose
+    When set, outputs messages via Write-Verbose instead of Write-Host.
+
+.EXAMPLE
+    Write-Log -Messages "Starting process..."
+
+.EXAMPLE
+    Write-Log -Messages "Something failed" -IsError $true
+#>
 	[CmdletBinding()]
 	Param(
 		[Parameter(Mandatory = $False,

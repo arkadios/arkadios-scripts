@@ -1,9 +1,22 @@
 ﻿
 function DoesPropertyExists([string]$WantedPropertyName, $ObjectToLookIn){
-	<#
-		.DESCRIPTION
-		This a function that can be called to check if a property with a certain name is available within an object. That object and property name must be provided as input!
-	#>
+<#
+.SYNOPSIS
+    Checks if a property with a given name exists on an object.
+
+.DESCRIPTION
+    Inspects the PSObject properties of the provided object and returns $true
+    if a property matching the specified name is found, $false otherwise.
+
+.PARAMETER WantedPropertyName
+    The name of the property to search for.
+
+.PARAMETER ObjectToLookIn
+    The object to inspect for the property.
+
+.EXAMPLE
+    DoesPropertyExists -WantedPropertyName "Name" -ObjectToLookIn $myObject
+#>
 	
 	[bool]$returnValue=$false
 	

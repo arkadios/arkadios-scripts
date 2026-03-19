@@ -1,4 +1,19 @@
 function Expand-Base64 {
+<#
+.SYNOPSIS
+    Decodes a Base64 string, optionally decompressing GZip content.
+
+.DESCRIPTION
+    Takes a Base64-encoded string, decodes it to bytes, and attempts to read it
+    as UTF-8 text. If the content is GZip-compressed, it will be decompressed
+    first. Returns an error message if the input is not valid Base64.
+
+.PARAMETER base64String
+    The Base64-encoded string to decode.
+
+.EXAMPLE
+    Expand-Base64 -base64String "SGVsbG8gV29ybGQ="
+#>
     param (
         [Parameter(Mandatory = $true)]
         [string]$base64String

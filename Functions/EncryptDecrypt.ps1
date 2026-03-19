@@ -16,6 +16,33 @@ $script:encryptionkey = (13, 74, 2, 3, 56, 34, 5235, 22, 77, 71, 2, 223, 42, 54,
 
 
 function EncryptDecrypt([string]$stringToEncryptOrDecrypt, [switch]$encrypt, [switch]$decrypt, [switch]$clip) {
+<#
+.SYNOPSIS
+    Encrypts or decrypts a string using a symmetric key.
+
+.DESCRIPTION
+    Uses ConvertTo-SecureString / ConvertFrom-SecureString with a predefined encryption
+    key to encrypt a plain text string or decrypt an encrypted string. Optionally copies
+    the result to the clipboard.
+
+.PARAMETER stringToEncryptOrDecrypt
+    The string to encrypt or decrypt.
+
+.PARAMETER encrypt
+    Switch to encrypt the input string.
+
+.PARAMETER decrypt
+    Switch to decrypt the input string.
+
+.PARAMETER clip
+    Switch to copy the result to the clipboard.
+
+.EXAMPLE
+    EncryptDecrypt -stringToEncryptOrDecrypt "MySecret" -encrypt -clip
+
+.EXAMPLE
+    EncryptDecrypt -stringToEncryptOrDecrypt $encryptedValue -decrypt
+#>
     $returnValue = $null
 
     if ($encrypt) {
@@ -36,6 +63,16 @@ function EncryptDecrypt([string]$stringToEncryptOrDecrypt, [switch]$encrypt, [sw
 }
 
 function DecryptSecureString([string]$EncryptedString, [switch]$clip) {
+<#
+.SYNOPSIS
+    Decrypts an encrypted string back to a SecureString object.
+
+.PARAMETER EncryptedString
+    The encrypted string to convert back to a SecureString.
+
+.PARAMETER clip
+    Switch to copy the result to the clipboard.
+#>
     $returnValue = $null
 	
     $returnValue = ConvertTo-SecureString $EncryptedString -Key $encryptionkey 
@@ -45,6 +82,16 @@ function DecryptSecureString([string]$EncryptedString, [switch]$clip) {
 }
 
 function EncryptedStringToPlainText([string]$EncryptedString, [switch]$clip) {
+<#
+.SYNOPSIS
+    Converts an encrypted string to plain text.
+
+.PARAMETER EncryptedString
+    The encrypted string to convert to plain text.
+
+.PARAMETER clip
+    Switch to copy the result to the clipboard.
+#>
     $SecString = DecryptSecureString -EncryptedString $EncryptedString
     $BSTR = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($SecString)
     $returnValue = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto($BSTR) 

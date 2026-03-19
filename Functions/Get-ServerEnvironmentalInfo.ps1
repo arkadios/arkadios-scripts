@@ -1,6 +1,21 @@
 ﻿# General server related functions
 
 function Get-ServerEnvironmentalInfo([string]$ServerName){
+<#
+.SYNOPSIS
+    Retrieves server environment information from a SharePoint list.
+
+.DESCRIPTION
+    Connects to a SharePoint site and queries a server information list to retrieve
+    details such as SharePoint version, environment (OTAP), farm name, and farm role
+    for the specified server. Requires SharePoint to be installed on the local machine.
+
+.PARAMETER ServerName
+    The name of the server to look up.
+
+.EXAMPLE
+    Get-ServerEnvironmentalInfo -ServerName "SERVER01"
+#>
 	# get the sharepoint list item for current server 
 	$serverInfo = New-Object -TypeName PSObject
 	$serverInfo | Add-Member -MemberType NoteProperty -Name ServerName -Value $ServerName

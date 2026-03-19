@@ -1,4 +1,26 @@
-function Thread($command, $maxProcessingBatchSize = $((Get-CimInstance Win32_ComputerSystem).NumberOfLogicalProcessors - 1), [string]$Base64EncodedCommand ) {
+function Thread{
+<#
+.SYNOPSIS
+    Runs a PowerShell command as a background process with throttling.
+
+.DESCRIPTION
+    Starts a new pwsh.exe background process with a Base64-encoded command. Manages
+    a global pool of running threads and waits for an available slot when the maximum
+    batch size is reached. The default batch size is the number of logical processors minus one.
+
+.PARAMETER command
+    The PowerShell command string to execute. Will be Base64-encoded automatically.
+
+.PARAMETER maxProcessingBatchSize
+    Maximum number of concurrent background processes. Defaults to logical processor count minus 1.
+
+.PARAMETER Base64EncodedCommand
+    An already Base64-encoded command string. If provided, skips encoding of the command parameter.
+
+.EXAMPLE
+    Thread -command "Get-Process | Out-File C:\temp\procs.txt"
+#>
+    param($command, $maxProcessingBatchSize = $((Get-CimInstance Win32_ComputerSystem).NumberOfLogicalProcessors - 1), [string]$Base64EncodedCommand )
     $counter++;
             
     if (-not $Global:runningThreads -or ($Global:runningThreads).Count -eq 0) { 

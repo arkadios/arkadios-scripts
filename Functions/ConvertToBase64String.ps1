@@ -1,4 +1,27 @@
 function ConvertToBase64String(){
+<#
+.SYNOPSIS
+    Converts a string to its Base64-encoded representation.
+
+.DESCRIPTION
+    Takes a string input (including from pipeline) and converts it to a Base64 string
+    using the default system encoding. Optionally copies the result to the clipboard.
+
+.PARAMETER StringToConvert
+    The string to encode as Base64. Accepts pipeline input.
+
+.PARAMETER clip
+    When $true, copies the result to the clipboard.
+
+.PARAMETER WhatIf
+    When $true, performs a dry run (no actual conversion).
+
+.EXAMPLE
+    "Hello World" | ConvertToBase64String
+
+.EXAMPLE
+    ConvertToBase64String -StringToConvert "Secret" -clip $true
+#>
     [cmdletbinding()]
     param(
         [parameter(ValueFromPipeline = $True, Mandatory = $True)]

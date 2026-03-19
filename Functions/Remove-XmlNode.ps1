@@ -1,4 +1,30 @@
 function Remove-XmlNode {
+<#
+.SYNOPSIS
+    Removes XML nodes matching an XPath expression from an XML file.
+
+.DESCRIPTION
+    Loads an XML file, finds all nodes matching the provided XPath expression,
+    removes them from the document, and optionally saves the changes.
+
+.PARAMETER SourceXmlFileName
+    Path to the XML file to process.
+
+.PARAMETER XPath
+    The XPath expression to select nodes for removal.
+
+.PARAMETER SaveChanges
+    When specified, saves the modified XML back to disk.
+
+.PARAMETER XmlNamespace
+    Optional XML namespace hashtable for XPath queries.
+
+.PARAMETER WhatIf
+    When $true, skips saving changes to disk.
+
+.EXAMPLE
+    Remove-XmlNode -SourceXmlFileName "config.xml" -XPath "//OldNode" -SaveChanges
+#>
     Param (
         [Parameter(Mandatory = $True)][string]$SourceXmlFileName, 
         [Parameter(Mandatory = $True)][string]$XPath, 

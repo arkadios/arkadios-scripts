@@ -1,6 +1,21 @@
 function Get-HWSpecs(
     [string[]]$servers = @()
 ) {
+<#
+.SYNOPSIS
+    Retrieves hardware specifications (CPU, RAM, disk) from remote servers.
+
+.DESCRIPTION
+    Connects to one or more remote servers via Invoke-Command and collects CPU count,
+    RAM (GB), and disk usage (used/free in GB). Displays results in a formatted table,
+    copies to clipboard, and shows summary totals.
+
+.PARAMETER servers
+    An array of server names to query. If empty, prompts for comma-separated input.
+
+.EXAMPLE
+    Get-HWSpecs -servers @("Server01","Server02")
+#>
     $results = @(); 
 
     if ($null -eq $servers -or $servers.Count -le 0) {

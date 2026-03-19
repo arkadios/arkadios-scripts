@@ -1,4 +1,19 @@
-function DynamicMenu([string[]]$Values){
+function DynamicMenu{
+<#
+.SYNOPSIS
+    Displays an interactive numbered menu and returns the selected value.
+
+.DESCRIPTION
+    Presents a numbered list of options to the user in the console. The user selects
+    an option by entering its number, and the corresponding value is returned.
+
+.PARAMETER Values
+    A string array of menu options to display.
+
+.EXAMPLE
+    $choice = DynamicMenu -Values @("Option A","Option B","Option C")
+#>
+    param([string[]]$Values)
     
     $null = $chosenReturnValue; 
     write-host ""

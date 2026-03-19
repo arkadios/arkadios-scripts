@@ -1,5 +1,34 @@
 function Move-XmlNodes {
-    
+<#
+.SYNOPSIS
+    Moves XML nodes from a source XML file to a destination XML file.
+
+.DESCRIPTION
+    Finds XML nodes matching an XPath expression in the source file, copies them
+    to the destination file (replacing existing nodes with matching identifying property),
+    and removes them from the source. Both files are saved after processing.
+
+.PARAMETER SourceXmlFileName
+    Path to the source XML file.
+
+.PARAMETER DestinationXmlFileName
+    Path to the destination XML file.
+
+.PARAMETER XPath
+    The XPath expression to select nodes to move.
+
+.PARAMETER IdentifyingPropertyName
+    The attribute name used to match existing nodes in the destination for replacement.
+
+.PARAMETER XmlNamespace
+    Optional XML namespace hashtable for XPath queries.
+
+.PARAMETER WhatIf
+    When $true, skips saving changes to disk.
+
+.EXAMPLE
+    Move-XmlNodes -SourceXmlFileName "source.xml" -DestinationXmlFileName "dest.xml" -XPath "//pnp:ListInstance" -IdentifyingPropertyName "Title" -XmlNamespace @{pnp="http://schemas.dev/pnp"}
+#>
     Param(
         [Parameter(Mandatory = $True)][string]$SourceXmlFileName, 
         [Parameter(Mandatory = $True)][string]$DestinationXmlFileName, 

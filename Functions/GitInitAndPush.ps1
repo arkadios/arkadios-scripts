@@ -1,4 +1,38 @@
 function GitInitAndPush {
+<#
+.SYNOPSIS
+    Initializes a new Git repository in the current directory and pushes it to a remote.
+
+.DESCRIPTION
+    Initializes a new Git repository in the current working directory, configures user
+    identity, creates an initial commit with all files, and pushes to the specified remote
+    repository. Prompts for confirmation before executing.
+
+    The following steps are performed in order:
+    1. git init
+    2. git checkout -b main
+    3. git config user.email / user.name
+    4. git add -A
+    5. git commit -m "initial add and commit"
+    6. git remote add origin <RepoUrl>
+    7. git push -u origin main
+
+    Execution stops immediately if any step fails.
+
+.PARAMETER RepoUrl
+    The remote repository URL to add as origin (e.g. https://github.com/user/repo.git).
+
+.PARAMETER userName
+    The Git user name to configure for this repository.
+
+.PARAMETER userEmail
+    The Git user email to configure for this repository.
+
+.EXAMPLE
+    GitInitAndPush -RepoUrl "https://github.com/user/repo.git" -userName "John" -userEmail "john@example.com"
+
+    Initializes git in the current directory and pushes to the specified GitHub repository.
+#>
     param (
         [Parameter(Mandatory = $true)]
         [string]$RepoUrl,

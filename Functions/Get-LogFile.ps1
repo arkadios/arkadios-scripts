@@ -3,6 +3,19 @@
 #>
 
 function CheckCreateArkadiosPSLogsFolder() {
+<#
+.SYNOPSIS
+    Ensures the Arkadios PowerShell logs folder exists and is configured.
+
+.DESCRIPTION
+    Checks for the ArkadiosPSLogsFolder user environment variable. If not set,
+    determines the appropriate drive (D: or system drive, avoiding Azure temp storage)
+    and creates a logs\powershell folder. Stores the path in a user environment variable
+    and returns it.
+
+.EXAMPLE
+    $logsFolder = CheckCreateArkadiosPSLogsFolder
+#>
 	
 	if ([System.Environment]::GetEnvironmentVariable("ArkadiosPSLogsFolder", "USER") -eq $null) {
 		$drive = ""
@@ -35,7 +48,27 @@ function CheckCreateArkadiosPSLogsFolder() {
 	return $global:PSLogsFolder
 }
 
-function Get-LogFile([string]$LogNameProvided) {	
+function Get-LogFile{
+<#
+.SYNOPSIS
+    Resolves or generates a log file path with date-stamped naming.
+
+.DESCRIPTION
+    Returns a full log file path. If no name is provided, generates one using the
+    current date/hour. If a name is provided without a folder, uses the default
+    Arkadios PS logs folder. Ensures the filename has a .log extension and a date
+    component.
+
+.PARAMETER LogNameProvided
+    Optional log file name or full path. If empty, a default name is generated.
+
+.EXAMPLE
+    $logPath = Get-LogFile -LogNameProvided "MyScript"
+
+.EXAMPLE
+    $logPath = Get-LogFile
+#>
+    param([string]$LogNameProvided)
 	$result = ""; 
 	$folderOfTheLogFile = ""; 
 	$fileNameOfTheLogFile = ""; 

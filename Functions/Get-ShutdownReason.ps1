@@ -1,4 +1,16 @@
 function Get-ShutdownReason(){
+<#
+.SYNOPSIS
+    Retrieves shutdown and unexpected restart events from the Windows Event Log.
+
+.DESCRIPTION
+    Queries the System event log for event IDs 41, 1074, 6006, 6605, and 6008
+    which indicate shutdowns, restarts, and unexpected power loss events.
+    Displays the results as a formatted list.
+
+.EXAMPLE
+    Get-ShutdownReason
+#>
 
     write-host -f cyan " trying to find the reason of unknown shutdown"
     write-host -f cyan "  let check the eventviewer logs"
